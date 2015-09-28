@@ -7,7 +7,6 @@ gem 'rake', '~> 10.4.0'
 
 gem 'json'
 
-gem 'mysql2', '0.3.15'
 gem 'sqlite3'
 
 gem 'bcrypt', '~> 3.1.7'

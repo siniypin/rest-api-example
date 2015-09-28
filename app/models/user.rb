@@ -1,12 +1,10 @@
-class User
-  attr_accessor :role
+class User < ActiveRecord::Base
+  attr_accessor :name, :role
 
-  def initialize
-    self.role = Role::ADMIN
-  end
+  validates_inclusion_of :role, in: Role.all_values
 
-  def valid?
-    Role::all_values.include? role
+  after_initialize -> do
+    self.role ||= Role::ADMIN
   end
 
   def behave_according_to_role
