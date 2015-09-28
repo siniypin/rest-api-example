@@ -11,8 +11,16 @@ describe User do
       expect { subject.role }.not_to raise_error
     end
 
-    it 'should have a default value of Role::ADMIN' do
+    it 'should have a default value of admin' do
       expect(subject.role).to eq Role::ADMIN
+    end
+
+    Role::all_values.each do |role|
+      it "should accept #{role} value" do
+        subject.role = role
+
+        expect(subject).to be_valid
+      end
     end
 
     it 'should not accept incorrect role values' do
