@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928221341) do
+ActiveRecord::Schema.define(version: 20150928224258) do
+
+  create_table "comments", force: :cascade do |t|
+    t.string  "text",      null: false
+    t.integer "review_id", null: false
+    t.integer "user_id",   null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string  "title",   null: false
+    t.string  "text",    null: false
+    t.integer "user_id", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "role",            default: "admin", null: false
