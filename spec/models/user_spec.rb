@@ -29,4 +29,14 @@ describe User do
       expect(subject).not_to be_valid
     end
   end
+
+  Role::all_values.each do |role|
+    it "should behave according to #{role} role" do
+      subject.role = role
+
+      subject.behave_according_to_role
+
+      expect(subject).to be_a Behavior.const_get("#{role.classify}Privilege")
+    end
+  end
 end
