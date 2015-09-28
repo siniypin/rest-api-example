@@ -7,6 +7,12 @@ describe User do
   end
 
   describe 'role attribute' do
+    before do
+      #exclude non related validation errors
+      subject.password = 'randomstring'
+      subject.password_confirmation = 'randomstring'
+    end
+
     it 'should exist' do
       expect { subject.role }.not_to raise_error
     end
@@ -38,5 +44,9 @@ describe User do
 
       expect(subject).to be_a Behavior.const_get("#{role.classify}Privilege")
     end
+  end
+
+  describe 'password' do
+    it('can have unit tests skipped as long as I am not testing a framework, there are tests provided') {}
   end
 end

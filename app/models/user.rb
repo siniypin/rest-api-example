@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_secure_password
+
   attr_accessor :name, :role
 
   validates_inclusion_of :role, in: Role.all_values
