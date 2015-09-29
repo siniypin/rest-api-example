@@ -5,15 +5,15 @@ class Api::ReviewsController < ApplicationController
   before_action :authorize!, except: [:index, :show] # NOTE: everyone is permitted to read, why bother checking?
 
   def index
-    respond_with :api, Review.all
+    respond_with :api, ReviewCollectionDecorator.decorate(Review.all)
   end
 
   def show
-    respond_with :api, @review
+    respond_with :api, @review.decorate
   end
 
   def create
-    respond_with :api, Review.create!(params.require(:review).permit(:title, :text).merge(user_id: @current_user.id))
+    respond_with :api, Review.create!(params.require(:review).permit(:title, :text).merge(user_id: @current_user.id)).decorate
   end
 
   def update

@@ -1,24 +1,34 @@
 require 'spec_helper'
 require 'rails_helper'
 
+class String
+  def trim
+    self[1..-2]
+  end
+end
+
+
 describe Api::ReviewsController, type: :controller do
   it_should_behave_like :basic_auth
   it_should_behave_like :accept_json_mime
+  it_should_behave_like :comply_with_hateoas
 
-  before { allow(Review).to receive(:find).and_return(Review.new) }
+  before { allow(Review).to receive(:find).and_return(Review.new(id: 1)) }
 
   context 'CRUD features' do
     shared_examples_for :read_anything do
       it 'should return review' do
         get :show, id: 1, format: :json
 
-        expect(response.body).to eq Review.first.to_json
+        expect(response.body).to include Review.first.to_json.trim
       end
 
       it 'should return all reviews' do
         get :index, format: :json
 
-        expect(response.body).to eq Review.all.to_json
+        Review.all.each do |x|
+          expect(response.body).to include x.to_json.trim
+        end
       end
     end
 
@@ -57,7 +67,7 @@ describe Api::ReviewsController, type: :controller do
         post :create, review: review_params, format: :json
 
         expect(response).to have_http_status :created
-        expect(response.body).to eq({id: next_id}.merge!(review_params).to_json)
+        expect(response.body).to include({id: next_id}.merge!(review_params).to_json.trim)
         expect(Review).to have_received :create!
       end
 

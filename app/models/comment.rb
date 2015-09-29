@@ -1,5 +1,4 @@
 class Comment < ActiveRecord::Base
-  #attr_accessor :text
   belongs_to :review
   belongs_to :user
 
