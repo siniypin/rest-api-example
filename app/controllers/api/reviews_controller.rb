@@ -31,7 +31,7 @@ class Api::ReviewsController < ApplicationController
 
   def authorize!
     unless @current_user.behave_according_to_role.send("can_#{params[:action]}?".to_sym, @review)
-      raise AccessDeniedError, "User #{@current_user.name} cannot #{params[:action]} review ##{@review.id}}"
+      raise AccessDeniedError, "User #{@current_user.name} cannot #{params[:action]} review ##{@review.try :id}}"
     end
   end
 end

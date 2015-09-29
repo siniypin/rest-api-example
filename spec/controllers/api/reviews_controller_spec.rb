@@ -123,10 +123,29 @@ describe Api::ReviewsController, type: :controller do
     end
 
     context 'given a guest' do
-      let(:user) { User.new(id: 1, role: Role::USER) }
+      let(:user) { User.new(id: 1, role: Role::GUEST) }
 
       it_should_behave_like :read_anything
-      
+
+      it 'should forbid creating review' do
+        post :create, review: review_params, format: :json
+
+        expect(response).to have_http_status :forbidden
+      end
+
+      it 'should forbid review edits' do
+        update_review_params = {id: 1, title: Forgery(:basic).text, text: Forgery(:basic).text}
+
+        put :update, id: 1, review: update_review_params, format: :json
+
+        expect(response).to have_http_status :forbidden
+      end
+
+      it 'should forbid deleting review' do
+        delete :destroy, id: 1, format: :json
+
+        expect(response).to have_http_status :forbidden
+      end
     end
   end
 end
