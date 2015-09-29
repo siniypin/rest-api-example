@@ -9,8 +9,8 @@ describe User do
   describe 'role attribute' do
     before do
       #exclude non related validation errors
-      subject.password = 'randomstring'
-      subject.password_confirmation = 'randomstring'
+      subject.password = Forgery(:basic).password
+      subject.password_confirmation = subject.password
     end
 
     it 'should exist' do
@@ -30,7 +30,7 @@ describe User do
     end
 
     it 'should not accept incorrect role values' do
-      subject.role = 'randomstring'
+      subject.role = Forgery(:basic).text
 
       expect(subject).not_to be_valid
     end

@@ -11,20 +11,20 @@ describe Review do
     before { subject.user = user }
 
     it 'should be invalid without title' do
-      subject.text = 'randomstring'
+      subject.text = Forgery(:basic).text
 
       expect(subject.valid?).to be_falsey
     end
 
     it 'should be invalid without text' do
-      subject.title = 'randomstring'
+      subject.title = Forgery(:basic).text
 
       expect(subject.valid?).to be_falsey
     end
 
     it 'should be valid with all properties provided' do
-      subject.text  = 'randomstring'
-      subject.title = 'randomstring'
+      subject.text  = Forgery(:basic).text
+      subject.title = Forgery(:basic).text
 
       expect(subject.valid?).to be_truthy
     end

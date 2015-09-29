@@ -16,5 +16,5 @@ group :test, :development do
   gem 'rspec-mocks'
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails', '~> 4.0', :require => false
-  gem 'timecop'
+  gem 'forgery'
 end

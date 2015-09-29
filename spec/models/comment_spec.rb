@@ -17,7 +17,7 @@ describe Comment do
     end
 
     it 'should be valid with all properties provided' do
-      subject.text  = 'randomstring'
+      subject.text  = Forgery(:basic).text
 
       expect(subject.valid?).to be_truthy
     end
