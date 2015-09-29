@@ -58,7 +58,7 @@ describe Api::ReviewsController, type: :controller do
     before { Review.stub_chain(:find, :destroy!) }
 
     context 'given an admin' do
-      let(:user) { User.new(id: 1) }
+      let(:user) { User.new(id: 1, role: Role::ADMIN) }
       before { allow_any_instance_of(User).to receive(:authenticate).and_return(user) }
 
       it_should_behave_like :read_anything

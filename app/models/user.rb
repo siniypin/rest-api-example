@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of :role, in: Role.all_values
 
   after_initialize -> do
-    self.role ||= Role::ADMIN
+    self.attributes['role'] ||= Role::ADMIN
   end
 
   def behave_according_to_role
