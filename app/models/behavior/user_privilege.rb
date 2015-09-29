@@ -1,10 +1,10 @@
 module Behavior
   module UserPrivilege
-    def can_read?(object)
+    def can_read?(*args)
       true
     end
 
-    def can_create?
+    def can_create?(*args)
       true
     end
 

@@ -1,6 +1,6 @@
 module Behavior
   module GuestPrivilege
-    def can_read?
+    def can_read?(*args)
       true
     end
 
