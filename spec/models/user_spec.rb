@@ -18,8 +18,6 @@ describe User do
     end
 
     it 'should have a default value of admin' do
-      pending 'I can\'t understand why simple things have to be so much complicated'
-      fail
       expect(subject.role).to eq Role::ADMIN
     end
 

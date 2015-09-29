@@ -3,7 +3,9 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate
 
-  rescue_from AccessDeniedError, with: :deny_access
+  rescue_from AccessDeniedError, with: :forbidden
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActiveRecord::RecordInvalid, with: :bad_request
 
   protected
   def authenticate
@@ -12,7 +14,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def deny_access(exception)
+  def forbidden(exception)
     render json: {error: exception.message}, status: :forbidden
+  end
+
+  def not_found(exception)
+    render json: {error: exception.message}, status: :not_found
+  end
+
+  def bad_request(exception)
+    render json: {error: exception.message}, status: :bad_request
+  end
+
+  def method_missing(name, *args)
+    render json: {error: args.first.message}, status: name
   end
 end
