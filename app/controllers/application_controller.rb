@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate
 
+  rescue_from Exception, with: :internal_server_error
   rescue_from AccessDeniedError, with: :forbidden
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActiveRecord::RecordInvalid, with: :bad_request
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
 
   def bad_request(exception)
     render json: {error: exception.message}, status: :bad_request
+  end
+
+  def internal_server_error(exception)
+    render json: {error: exception.message}, status: :internal_server_error
   end
 
   def method_missing(name, *args)
