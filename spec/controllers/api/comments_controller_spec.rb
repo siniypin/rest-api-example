@@ -2,11 +2,12 @@ require 'spec_helper'
 require 'rails_helper'
 
 describe Api::CommentsController, type: :controller do
-  it_should_behave_like :basic_auth, {id: 1, review_id: 1, format: :json}
-  it_should_behave_like :accept_json_mime, {id: 1, review_id: 1, format: :json}
   let(:review) { Review.new }
   before { allow(Review).to receive(:find).and_return(review) }
   before { review.stub_chain(:comments, :find).and_return(Comment.new) }
+
+  it_should_behave_like :basic_auth, {id: 1, review_id: 1, format: :json}
+  it_should_behave_like :accept_json_mime, {id: 1, review_id: 1, format: :json}
 
   context 'CRUD features' do
     let(:review) { Review.new(id:    1, user: user,
